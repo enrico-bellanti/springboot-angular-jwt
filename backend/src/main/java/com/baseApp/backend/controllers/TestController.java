@@ -14,7 +14,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class TestController {
 
-    @PreAuthorize("@authorizationService.hasPermissions({'simple.test', 'simple.test2'})")
+    @PreAuthorize("@authorizationService.hasAllPermissions({'simple.test', 'simple.test2', 'simple.test8'})")
     @GetMapping("/base")
     public ResponseEntity<?> simpleTest(){
         return ResponseEntity.ok().body("Test Works");
