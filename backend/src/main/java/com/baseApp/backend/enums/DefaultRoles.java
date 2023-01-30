@@ -1,6 +1,6 @@
 package com.baseApp.backend.enums;
 
-public enum DefaultRole {
+public enum DefaultRoles {
     USER,
     ADMIN
 }

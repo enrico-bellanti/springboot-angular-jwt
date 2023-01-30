@@ -1,8 +1,9 @@
 package com.baseApp.backend.services;
 
-import com.baseApp.backend.enums.DefaultRole;
+import com.baseApp.backend.enums.DefaultRoles;
 import com.baseApp.backend.exceptions.RefreshTokenException;
 import com.baseApp.backend.exceptions.RoleException;
+import com.baseApp.backend.exceptions.UserException;
 import com.baseApp.backend.models.RefreshToken;
 import com.baseApp.backend.models.Role;
 import com.baseApp.backend.models.User;
@@ -43,13 +44,19 @@ public class AuthenticationService {
 
 
     public void register(SignUpRequest signUpRequest) {
-        Role role = roleRepository.findByName(DefaultRole.USER.name())
+        String email = signUpRequest.getEmail();
+
+        if (userRepository.existsByEmail(email)) {
+            throw new UserException("user_email_already_exist", email);
+        }
+
+        Role role = roleRepository.findByName(DefaultRoles.USER.name())
                 .orElseThrow(() -> new RoleException("role_not_found"));
 
         var user = User.builder()
                 .firstName(signUpRequest.getFirstName())
                 .lastName(signUpRequest.getLastName())
-                .email(signUpRequest.getEmail())
+                .email(email)
                 .password(passwordEncoder.encode(signUpRequest.getPassword()))
                 .roles(new HashSet<>(Arrays.asList(role)))
                 .build();
