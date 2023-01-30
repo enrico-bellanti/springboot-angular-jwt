@@ -1,16 +1,17 @@
-package com.baseApp.backend.controllers.auth;
+package com.baseApp.backend.controllers;
 
+import com.baseApp.backend.models.UserDetailsImpl;
+import com.baseApp.backend.payloads.requests.RefreshTokenRequest;
 import com.baseApp.backend.payloads.requests.SignInRequest;
 import com.baseApp.backend.payloads.requests.SignUpRequest;
 import com.baseApp.backend.payloads.responses.AuthenticationResponse;
 import com.baseApp.backend.payloads.responses.MessageResponse;
 import com.baseApp.backend.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
+    @Autowired
     private final AuthenticationService authService;
 
     @PostMapping("/sign-up")
@@ -34,5 +36,20 @@ public class AuthenticationController {
             @Valid @RequestBody SignInRequest signInRequest
     ){
         return ResponseEntity.ok(authService.authenticate(signInRequest));
+    }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<AuthenticationResponse> refreshToken(
+            @Valid @RequestBody RefreshTokenRequest refreshTokenRequest
+    ) {
+        return ResponseEntity.ok(authService.refreshToken(refreshTokenRequest));
+    }
+
+    @DeleteMapping("/sign-out")
+    public ResponseEntity<MessageResponse> logOut(
+            @AuthenticationPrincipal UserDetailsImpl user
+    ) {
+        authService.logOut(user.getId());
+        return ResponseEntity.ok(new MessageResponse("user_logged_out"));
     }
 }

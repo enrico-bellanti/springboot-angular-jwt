@@ -19,17 +19,17 @@ import java.util.function.Function;
 @Slf4j
 public class JwtService {
 
-    private String SECRET_KEY = "5267556B58703273357638792F423F4428472B4B6250655368566D5971337436";
+    private String SECRET_KEY;
 
-    private int JWT_EXPIRATION_MS = 3600000;
+    private Long JWT_TOKEN_EXP;
 
-    /*9public JwtService(
-            @Value("S{authentication.sign-in-key}") String SECRET_KEY,
-            @Value("S{authentication.jwt-expiration}") int JWT_EXPIRATION_MS
+    public JwtService(
+            @Value("${authentication.jwt-token-exp}") Long JWT_TOKEN_EXP,
+            @Value("${authentication.jwt-secret}") String SECRET_KEY
     ) {
         this.SECRET_KEY = SECRET_KEY;
-        this.JWT_EXPIRATION_MS = JWT_EXPIRATION_MS;
-    }*/
+        this.JWT_TOKEN_EXP = JWT_TOKEN_EXP;
+    }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -53,7 +53,7 @@ public class JwtService {
                 .setClaims(extraClaim)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_MS))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_EXP))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -64,7 +64,7 @@ public class JwtService {
                     .parserBuilder()
                     .setSigningKey(getSignInKey())
                     .build()
-                    .parseClaimsJwt(token);
+                    .parseClaimsJws(token);
             return true;
         } catch (SignatureException e) {
             log.error("Invalid JWT signature: {}", e.getMessage());
@@ -94,7 +94,7 @@ public class JwtService {
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody();
     }
 

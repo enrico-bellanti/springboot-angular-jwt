@@ -33,14 +33,14 @@ public class User extends BaseEntity {
     @Column(name = "password", nullable = false, length = 60)
     private String password;
 
-    @Column(name = "deleted_at")
-    private Date deletedAt;
-
     @Column(name = "phone", length = 50)
     private String phone;
 
     @Column(name = "preferred_lang", length = 5)
     private Locale preferredLang;
+
+    @Column(name = "deleted_at")
+    private Date deletedAt;
 
     //Relations
     @ManyToMany(fetch = FetchType.LAZY)
@@ -59,5 +59,13 @@ public class User extends BaseEntity {
         if (this.roles.contains(role)){
             this.roles.remove(role);
         }
+    }
+
+    public List<String> getRoleList(){
+        return this.roles.stream().map(this::extractRoleName).toList();
+    }
+
+    private String extractRoleName(Role role){
+        return role.getName();
     }
 }
