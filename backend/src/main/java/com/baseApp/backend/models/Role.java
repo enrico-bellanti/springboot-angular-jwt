@@ -26,4 +26,20 @@ public class Role extends BaseEntity {
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Set<Permission> permissions = new HashSet<>();
+
+    public Role(String name) {
+        this.name = name;
+    }
+
+    public void addPermission(Permission permission){
+        if (!permissions.contains(permission)){
+            permissions.add(permission);
+        }
+    }
+
+    public void removePermission(Permission permission){
+        if (permissions.contains(permission)){
+            permissions.remove(permission);
+        }
+    }
 }
