@@ -1,4 +1,4 @@
-package com.baseApp.backend.payloads.requests;
+package com.baseApp.backend.seeders.payloads.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

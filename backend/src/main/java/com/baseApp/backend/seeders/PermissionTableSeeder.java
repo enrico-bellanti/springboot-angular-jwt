@@ -19,7 +19,7 @@ import java.util.List;
 public class PermissionTableSeeder extends BaseSeeder<Permission> {
 
     @Autowired
-    PermissionService permissionService;
+    private PermissionService permissionService;
 
     public PermissionTableSeeder() {
         super(Permission.class, "classpath:seeders/permissions.json");

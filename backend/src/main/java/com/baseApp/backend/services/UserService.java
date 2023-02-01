@@ -1,9 +1,7 @@
 package com.baseApp.backend.services;
 
-import com.baseApp.backend.models.Role;
 import com.baseApp.backend.models.User;
-import com.baseApp.backend.payloads.responses.RoleResponse;
-import com.baseApp.backend.payloads.responses.UserResponse;
+import com.baseApp.backend.seeders.payloads.responses.UserResponse;
 import com.baseApp.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

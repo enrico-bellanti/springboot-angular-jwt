@@ -1,4 +1,4 @@
-package com.baseApp.backend.payloads.responses;
+package com.baseApp.backend.seeders.payloads.responses;
 
 import com.baseApp.backend.models.Permission;
 import lombok.AllArgsConstructor;

@@ -15,17 +15,17 @@ public class DatabaseSeeder {
     private boolean seedersOn;
 
     @Autowired
-    PermissionTableSeeder permissionTableSeeder;
+    private PermissionTableSeeder permissionTableSeeder;
 
     @Autowired
-    RoleTableSeeder roleTableSeeder;
+    private RoleTableSeeder roleTableSeeder;
 
     @Autowired
-    UserTableSeeder userTableSeeder;
+    private UserTableSeeder userTableSeeder;
 
 
     @EventListener
-    public void seed(ContextRefreshedEvent event) {
+    public void seedAll(ContextRefreshedEvent event) {
         if (seedersOn){
             log.info("Seeders run...");
             permissionTableSeeder.run();

@@ -27,10 +27,10 @@ import java.util.stream.Collectors;
 public class RoleTableSeeder extends BaseSeeder<RoleSeeder> {
 
     @Autowired
-    RoleService roleService;
+    private RoleService roleService;
 
     @Autowired
-    PermissionService permissionService;
+    private PermissionService permissionService;
 
     public RoleTableSeeder() {
         super(RoleSeeder.class, "classpath:seeders/roles.json");
