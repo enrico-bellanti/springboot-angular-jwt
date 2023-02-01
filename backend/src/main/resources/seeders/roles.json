@@ -1,0 +1,29 @@
+[
+  {
+    "name" : "USER",
+    "permissions" : [
+      "product.get"
+    ]
+  },
+  {
+    "name" : "ADMIN",
+    "permissions" : [
+      "user.view",
+      "user.create",
+      "user.update",
+      "user.soft-delete",
+      "user.restore",
+      "user.view-trashed",
+      "user.delete",
+      "role.create",
+      "role.view",
+      "role.update",
+      "role.delete",
+      "role.manage-permissions",
+      "permission.view",
+      "permission.create",
+      "permission.update",
+      "permission.delete"
+    ]
+  }
+]

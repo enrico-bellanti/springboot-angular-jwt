@@ -1,0 +1,70 @@
+[
+  {
+    "name" : "user.create",
+    "category" : "user"
+  },
+  {
+    "name" : "user.view",
+    "category" : "user"
+  },
+  {
+    "name" : "user.view-trashed",
+    "category" : "user"
+  },
+  {
+    "name" : "user.update",
+    "category" : "user"
+  },
+  {
+    "name" : "user.soft-delete",
+    "category" : "user"
+  },
+  {
+    "name" : "user.delete",
+    "category" : "user"
+  },
+  {
+    "name" : "user.restore",
+    "category" : "user"
+  },
+  {
+    "name" : "role.create",
+    "category" : "role"
+  },
+  {
+    "name" : "role.view",
+    "category" : "role"
+  },
+  {
+    "name" : "role.update",
+    "category" : "role"
+  },
+  {
+    "name" : "role.delete",
+    "category" : "role"
+  },
+  {
+    "name" : "role.manage-permissions",
+    "category" : "role"
+  },
+  {
+    "name" : "permission.create",
+    "category" : "permission"
+  },
+  {
+    "name" : "permission.view",
+    "category" : "permission"
+  },
+  {
+    "name" : "permission.update",
+    "category" : "permission"
+  },
+  {
+    "name" : "permission.delete",
+    "category" : "permission"
+  },
+  {
+    "name" : "product.get",
+    "category" : "product"
+  }
+]

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Table(name = "permissions")
 @JsonIgnoreProperties({ "createdAt", "updatedAt"})
+@DynamicUpdate
 public class Permission extends BaseEntity {
     @Column(name = "name", length = 50, unique = true, nullable = false)
     private String name;

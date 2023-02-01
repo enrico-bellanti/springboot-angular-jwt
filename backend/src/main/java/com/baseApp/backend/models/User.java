@@ -2,6 +2,7 @@ package com.baseApp.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,6 +19,7 @@ import java.util.*;
 @AllArgsConstructor
 @Builder
 @Data
+@DynamicUpdate
 public class User extends BaseEntity {
 
     @Column(name = "first_name", length = 50, nullable = false)
@@ -43,11 +45,14 @@ public class User extends BaseEntity {
     private Date deletedAt;
 
     //Relations
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(  name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    public User(String firstName, String lastName, String email, String password, String phone, Locale preferredLang, Set<Role> roles) {
+    }
 
     public void addRole(Role role){
         if (!this.roles.contains(role)){

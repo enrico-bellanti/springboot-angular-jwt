@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -17,11 +18,12 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "roles")
 @JsonIgnoreProperties({ "createdAt", "updatedAt"})
+@DynamicUpdate
 public class Role extends BaseEntity {
     @Column(name = "name", length = 50, unique = true, nullable = false)
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(  name = "roles_permissions",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id"))

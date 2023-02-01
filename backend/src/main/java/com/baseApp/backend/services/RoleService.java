@@ -8,17 +8,20 @@ import com.baseApp.backend.payloads.requests.RoleRequest;
 import com.baseApp.backend.payloads.responses.RoleResponse;
 import com.baseApp.backend.repositories.PermissionRepository;
 import com.baseApp.backend.repositories.RoleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class RoleService {
 
     @Autowired
@@ -27,9 +30,14 @@ public class RoleService {
     @Autowired
     private PermissionRepository permissionRepository;
 
+
     public Page<RoleResponse> getAll(PageRequest pageRequest){
         return roleRepository.findAll(pageRequest)
                 .map(r -> new RoleResponse(r));
+    }
+
+    public Optional<Role> getByName(String name){
+        return roleRepository.findByName(name);
     }
 
     public RoleResponse create(RoleRequest roleRequest){
@@ -104,6 +112,20 @@ public class RoleService {
 
         return roleRepository.save(role);
 
+    }
+
+    public Role insertOrUpdate(Role role){
+
+        var optionalRole = roleRepository.findByName(role.getName());
+
+        if (optionalRole.isPresent()){
+            Role existingRole = optionalRole.get();
+            existingRole.setName(role.getName());
+            existingRole.setPermissions(role.getPermissions());
+            return roleRepository.save(existingRole);
+        } else {
+            return roleRepository.save(role);
+        }
     }
 
 }

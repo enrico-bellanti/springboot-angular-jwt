@@ -23,7 +23,7 @@ import static com.baseApp.backend.utils.TranslateUtils.tl;
 public class PermissionController {
 
     @Autowired
-    PermissionService permissionService;
+    private PermissionService permissionService;
 
     @GetMapping
     public ResponseEntity<BodyResponse> list(
