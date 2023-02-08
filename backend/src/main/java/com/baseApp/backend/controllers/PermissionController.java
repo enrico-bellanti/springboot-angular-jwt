@@ -1,8 +1,8 @@
 package com.baseApp.backend.controllers;
 
-import com.baseApp.backend.seeders.payloads.requests.PermissionRequest;
-import com.baseApp.backend.seeders.payloads.responses.BodyResponse;
-import com.baseApp.backend.seeders.payloads.responses.MessageResponse;
+import com.baseApp.backend.payloads.requests.PermissionRequest;
+import com.baseApp.backend.payloads.responses.BodyResponse;
+import com.baseApp.backend.payloads.responses.MessageResponse;
 import com.baseApp.backend.services.PermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.UUID;
 import static com.baseApp.backend.utils.TranslateUtils.tl;
 
 @RestController
-@RequestMapping("/api/v1/permission/")
+@RequestMapping("/api/v1/permission")
 @RequiredArgsConstructor
 public class PermissionController {
 
@@ -55,10 +55,10 @@ public class PermissionController {
         return ResponseEntity.ok().body(bodyResponse);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> delete(@PathVariable("id") UUID id){
         permissionService.hardDelete(id);
-        return ResponseEntity.ok(new MessageResponse("role_hard_deleted_success", id.toString()));
+        return ResponseEntity.ok(new MessageResponse("permission_hard_deleted_success", id.toString()));
     }
 
 }

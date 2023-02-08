@@ -1,4 +1,4 @@
-package com.baseApp.backend.seeders.payloads.requests;
+package com.baseApp.backend.payloads.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,15 +13,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Data
 @Builder
-public class SignUpRequest {
-    @NotBlank(message = "first_name_required")
-    @Size(max = 60)
-    private String firstName;
-
-    @NotBlank(message = "last_name_required")
-    @Size(max = 60)
-    private String lastName;
-
+public class SignInRequest {
     @NotBlank(message = "email_required")
     @Email
     private String email;

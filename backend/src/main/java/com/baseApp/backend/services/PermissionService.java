@@ -2,8 +2,8 @@ package com.baseApp.backend.services;
 
 import com.baseApp.backend.exceptions.PermissionException;
 import com.baseApp.backend.models.Permission;
-import com.baseApp.backend.seeders.payloads.requests.PermissionRequest;
-import com.baseApp.backend.seeders.payloads.responses.PermissionResponse;
+import com.baseApp.backend.payloads.requests.PermissionRequest;
+import com.baseApp.backend.payloads.responses.PermissionResponse;
 import com.baseApp.backend.repositories.PermissionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

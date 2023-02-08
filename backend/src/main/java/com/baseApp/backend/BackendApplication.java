@@ -12,10 +12,10 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	/*@Bean
-	CommandLineRunner commandLineRunner(TestTableSeeder testTableSeeder){
+	@Bean
+	CommandLineRunner commandLineRunner(){
 		return arg -> {
-			testTableSeeder.run();
+
 		};
-	}*/
+	}
 }

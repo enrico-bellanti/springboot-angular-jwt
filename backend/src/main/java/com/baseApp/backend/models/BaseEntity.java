@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
@@ -17,7 +18,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@ToString
 @MappedSuperclass
 public abstract class BaseEntity {
 

@@ -1,9 +1,9 @@
 package com.baseApp.backend.controllers;
 
-import com.baseApp.backend.seeders.payloads.requests.UUIDListRequest;
-import com.baseApp.backend.seeders.payloads.requests.RoleRequest;
-import com.baseApp.backend.seeders.payloads.responses.BodyResponse;
-import com.baseApp.backend.seeders.payloads.responses.MessageResponse;
+import com.baseApp.backend.payloads.requests.UUIDListRequest;
+import com.baseApp.backend.payloads.requests.RoleRequest;
+import com.baseApp.backend.payloads.responses.BodyResponse;
+import com.baseApp.backend.payloads.responses.MessageResponse;
 import com.baseApp.backend.services.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

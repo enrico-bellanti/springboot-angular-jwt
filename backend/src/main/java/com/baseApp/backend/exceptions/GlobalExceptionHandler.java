@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity handleError(UserException ex) {
+    public ResponseEntity handleUserException(UserException ex) {
 
         ErrorResponse errorResponse =  new ErrorResponse(
                 ex.getMessage(),
@@ -102,7 +102,23 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PermissionException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity handleError(PermissionException ex) {
+    public ResponseEntity handlePermissionException(PermissionException ex) {
+
+        ErrorResponse errorResponse =  new ErrorResponse(
+                ex.getMessage(),
+                ex.getClass().getSimpleName(),
+                HttpStatus.BAD_REQUEST.value(),
+                ZonedDateTime.now());
+
+        return new ResponseEntity<>(
+                errorResponse,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(NotificationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity handleNotificationException(NotificationException ex) {
 
         ErrorResponse errorResponse =  new ErrorResponse(
                 ex.getMessage(),

@@ -1,11 +1,11 @@
 package com.baseApp.backend.controllers;
 
 import com.baseApp.backend.models.UserDetailsImpl;
-import com.baseApp.backend.seeders.payloads.requests.RefreshTokenRequest;
-import com.baseApp.backend.seeders.payloads.requests.SignInRequest;
-import com.baseApp.backend.seeders.payloads.requests.SignUpRequest;
-import com.baseApp.backend.seeders.payloads.responses.AuthenticationResponse;
-import com.baseApp.backend.seeders.payloads.responses.MessageResponse;
+import com.baseApp.backend.payloads.requests.RefreshTokenRequest;
+import com.baseApp.backend.payloads.requests.SignInRequest;
+import com.baseApp.backend.payloads.requests.SignUpRequest;
+import com.baseApp.backend.payloads.responses.AuthenticationResponse;
+import com.baseApp.backend.payloads.responses.MessageResponse;
 import com.baseApp.backend.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,7 @@
 package com.baseApp.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,7 +19,9 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
+@ToString
 @DynamicUpdate
 public class User extends BaseEntity {
 
@@ -32,6 +35,7 @@ public class User extends BaseEntity {
     @Email
     private String email;
 
+    @JsonIgnore
     @Column(name = "password", nullable = false, length = 60)
     private String password;
 
@@ -51,6 +55,14 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(
+            mappedBy = "notifiable",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private Set<Notification> notifications = new HashSet<>();
+
     public User(String firstName, String lastName, String email, String password, String phone, Locale preferredLang, Set<Role> roles) {
     }
 
@@ -64,13 +76,5 @@ public class User extends BaseEntity {
         if (this.roles.contains(role)){
             this.roles.remove(role);
         }
-    }
-
-    public List<String> getRoleList(){
-        return this.roles.stream().map(this::extractRoleName).toList();
-    }
-
-    private String extractRoleName(Role role){
-        return role.getName();
     }
 }

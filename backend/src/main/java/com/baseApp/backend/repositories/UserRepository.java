@@ -17,6 +17,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     Boolean existsByIdAndDeletedAtIsNull(UUID id);
 
+    Optional<User> findFirstByOrderByCreatedAtDesc();
+
     @Override
     @Query("select u from User u where u.deletedAt = null")
     Page<User> findAll(Pageable pageable);
