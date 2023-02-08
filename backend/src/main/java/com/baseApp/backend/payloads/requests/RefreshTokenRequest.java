@@ -1,9 +1,6 @@
 package com.baseApp.backend.payloads.requests;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,7 +8,9 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
+@ToString
 @Builder
 public class RefreshTokenRequest {
     @NotNull(message = "refresh_token_required")

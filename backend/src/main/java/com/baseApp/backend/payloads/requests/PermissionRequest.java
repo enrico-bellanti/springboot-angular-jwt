@@ -1,16 +1,15 @@
 package com.baseApp.backend.payloads.requests;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
+@ToString
 @Builder
 public class PermissionRequest {
     @NotBlank(message = "permission_required")

@@ -1,16 +1,15 @@
 package com.baseApp.backend.payloads.responses;
 
 import com.baseApp.backend.models.Role;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-@Data
+@Setter
+@Getter
+@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,14 +1,13 @@
 package com.baseApp.backend.payloads.responses;
 
 import com.baseApp.backend.models.Permission;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
-@Data
+@Setter
+@Getter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
