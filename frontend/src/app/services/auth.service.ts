@@ -19,15 +19,15 @@ export class AuthService {
   }
 
   loginUser(credentials: ILoginForm): Observable<IAuth> {
-    console.log(credentials);
-
     return this.http.post<IAuth>(
       `${this.apiBaseUrl}/auth/sign-in`, { ...credentials }
       );
   }
 
-  refreshToken(refreshToken: string) {
-    return this.http.post(`${this.apiBaseUrl}/auth/refresh-token`, { refreshToken });
+  refreshToken(refreshToken: string): Observable<IAuth> {
+    return this.http.post<IAuth>(
+      `${this.apiBaseUrl}/auth/refresh-token`, { refreshToken }
+      );
   }
 
   logoutUser() {

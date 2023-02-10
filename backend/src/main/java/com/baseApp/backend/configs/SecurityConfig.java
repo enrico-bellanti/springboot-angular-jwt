@@ -1,5 +1,6 @@
 package com.baseApp.backend.configs;
 
+import com.baseApp.backend.exceptions.AuthEntryPointJwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,9 @@ public class SecurityConfig {
     @Autowired
     private final AuthenticationProvider authenticationProvider;
 
+    @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -30,10 +34,10 @@ public class SecurityConfig {
                 .and()
                 .csrf()
                 .disable()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .authorizeHttpRequests()
                 .antMatchers(
                         "/api/v1/auth/**",
-                        "/api/v1/test/**",
                         "/websocket/**"
                 )
                 .permitAll()

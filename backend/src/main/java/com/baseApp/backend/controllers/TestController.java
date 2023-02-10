@@ -39,9 +39,9 @@ public class TestController {
 
     @GetMapping("/base")
     public ResponseEntity<?> simpleTest(){
-        var user = userService.getById(UUID.fromString("f1795bf3-0906-4ea4-acd0-3bd39592a8f8"))
-                .orElseThrow(()->new RuntimeException("failed"));
-        return ResponseEntity.ok().body(user);
+        var notification = notificationService.getById(UUID.fromString("56e1603d-62ce-4cf3-82ff-f7a744de1ad4")).get();
+
+        return ResponseEntity.ok().body(notification);
     }
 
     @PreAuthorize("@authorizationService.hasAllPermissions({'role.manage-permissions', 'role.view'})")

@@ -1,5 +1,6 @@
 package com.baseApp.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -23,7 +24,10 @@ public class Notification extends BaseEntity {
     @Column(name = "type", nullable = false, length = 50)
     private String type;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(
             name = "notifiable_id",
             nullable = false,

@@ -2,6 +2,7 @@ package com.baseApp.backend.exceptions;
 
 import com.baseApp.backend.exceptions.responses.ErrorResponse;
 import com.baseApp.backend.exceptions.responses.ErrorValidatorResponse;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;

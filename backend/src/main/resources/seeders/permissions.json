@@ -64,7 +64,7 @@
     "category" : "permission"
   },
   {
-    "name" : "product.get",
-    "category" : "product"
+    "name" : "dashboard.view",
+    "category" : "dashboard"
   }
 ]

@@ -1,3 +1,6 @@
+import { IPermission } from './../../interfaces/ipermission';
+import { IRole } from './../../interfaces/irole';
+import { IAuth } from './../../interfaces/iauth';
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { AuthState } from "./auth.state";
 
@@ -5,31 +8,48 @@ export const getAuthState = createFeatureSelector<AuthState>('auth');
 
 export const getAuthInfo = createSelector(
   getAuthState,
-  state => state.auth
+  (state): IAuth | null => state.auth
 );
 
 export const getAccessToken = createSelector(
   getAuthInfo,
-  (auth) => auth?.accessToken
+  (auth): string => auth!.accessToken
+);
+
+export const userIsAuthenticated = createSelector(
+  getAuthInfo,
+  (auth): boolean => auth != null ? true : false
 );
 
 export const getRefreshToken = createSelector(
   getAuthInfo,
-  (auth) => auth?.refreshToken
+  (auth):string => auth!.refreshToken
 );
 
 export const getUserId = createSelector(
   getAuthInfo,
-  (auth) => auth?.id
+  (auth): string => auth!.id
 );
 
 export const getUserEmail = createSelector(
   getAuthInfo,
-  (auth) => auth?.email
+  (auth): string => auth!.email
 );
 
 export const getUserRoles = createSelector(
   getAuthInfo,
-  (auth) => auth?.roles
+  (auth): IRole[] => auth!.roles
+);
+
+export const getUserPermissions = createSelector(
+  getUserRoles,
+  (roles): IPermission[]  => roles.map(role => role.permissions.flat()).flat()
+);
+
+export const getUserPermissionsName = createSelector(
+  getUserPermissions,
+  (permissions): string[]  => [
+    ...new Set(permissions.map((permissions) => permissions.name))
+  ]
 );
 
