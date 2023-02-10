@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private store: Store<AuthState>,
-        private notificationService: NotificationService
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {

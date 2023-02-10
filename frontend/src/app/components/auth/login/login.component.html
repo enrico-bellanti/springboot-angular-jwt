@@ -1,1 +1,76 @@
-<p>login works!</p>
+<div class="col-md-12">
+  <div class="card card-container">
+    <img
+      id="profile-img"
+      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+      class="profile-img-card"
+    />
+    <form
+      class="form"
+      name="loginForm"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="email"
+          name="email"
+          required
+        />
+        <div
+          *ngIf="email?.invalid  && (email?.dirty || email?.touched)"
+          class="invalid-feedback"
+        >
+          <small *ngIf="email?.errors?.['required']">
+            Email is required
+          </small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password"
+          name="password"
+          required
+          minlength="6"
+        />
+        <div
+          *ngIf="password?.invalid  && (password?.dirty || password?.touched)"
+          class="invalid-feedback"
+        >
+          <div>
+            <small *ngIf="password?.errors?.['required']">
+              Password is required
+            </small>
+          </div>
+          <div>
+            <small *ngIf="password?.errors?.['minlength']">
+              Password must be at least 6 characters
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group login-button-container">
+        <button
+          [disabled]="loginForm.invalid"
+          class="btn btn-primary btn-block"
+        >
+          Login
+        </button>
+      </div>
+      <div class="form-group message-error-wrapper">
+        <div
+          *ngIf="errorForm"
+          class="invalid-feedback"
+        >
+          Login failed: {{ 'errorMessageAuthentication' }}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

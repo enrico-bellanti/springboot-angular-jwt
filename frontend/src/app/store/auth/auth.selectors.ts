@@ -41,6 +41,11 @@ export const getUserRoles = createSelector(
   (auth): IRole[] => auth!.roles
 );
 
+export const getUserRolesName = createSelector(
+  getUserRoles,
+  (roles): string[] => roles.map(role => role.name)
+);
+
 export const getUserPermissions = createSelector(
   getUserRoles,
   (roles): IPermission[]  => roles.map(role => role.permissions.flat()).flat()

@@ -1,1 +1,24 @@
-<p>dashboard works!</p>
+<div class="banner dashboard-banner">
+  <img
+  id="profile-img"
+  src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+  class="profile-img-card"
+  />
+  <h1>Dashboard</h1>
+</div>
+
+<div class="container-info">
+  <div class="info-container">
+    <strong>Id: </strong>
+    <span>{{ userId$ | async }}</span>
+  </div>
+  <div class="info-container">
+    <strong>Email: </strong>
+    <span>{{ userEmail$ | async }}</span>
+  </div>
+  <div class="info-container" *ngIf="roles$ | async; let roles">
+    <strong>Roles: </strong>
+    <span  *ngFor="let role of roles">{{ role }} <span *ngIf="roles.length > 1">,</span></span>
+  </div>
+</div>
+
