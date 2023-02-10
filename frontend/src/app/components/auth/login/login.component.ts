@@ -10,7 +10,7 @@ import { AuthState } from 'src/app/store/auth/auth.state';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  errorForm: string | null = null;
+  errorLoginMessage: string | null = null;
 
   constructor(
     private readonly fb: FormBuilder,
