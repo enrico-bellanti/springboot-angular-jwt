@@ -20,3 +20,5 @@ public class BackendApplication {
 	}
 }
 
+//todo fix dynamic path mail activate from app properties
+//todo standardize all error response

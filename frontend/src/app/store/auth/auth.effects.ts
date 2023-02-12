@@ -21,6 +21,7 @@ import {
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { of, EMPTY } from 'rxjs';
 import { Router } from '@angular/router';
+import { IHttpResError } from 'src/app/interfaces/ihttp-res-error';
 
 @Injectable()
 export class AuthEffects {
@@ -30,7 +31,7 @@ export class AuthEffects {
       return this.authService.loginUser({...action.credentials})
         .pipe(
           map((auth) => loginSuccess({auth})),
-          catchError(() => of(loginFailure()))
+          catchError(({error}) => of(loginFailure({error})))
         )
     })
   ));

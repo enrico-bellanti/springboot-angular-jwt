@@ -65,10 +65,10 @@
       </div>
       <div class="form-group message-error-wrapper">
         <div
-          *ngIf="errorLoginMessage"
+          *ngIf="(errorLoginMessage$$ | async); let message"
           class="invalid-feedback"
         >
-          Login failed: {{ 'errorMessageAuthentication' }}
+          Login failed: {{ message }}
         </div>
       </div>
     </form>

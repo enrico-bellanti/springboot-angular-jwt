@@ -2,6 +2,7 @@ import { IAuth } from '../../interfaces/iauth';
 import { createAction, props } from "@ngrx/store";
 import { ILoginForm } from 'src/app/interfaces/ilogin-form';
 import { IRegistrationForm } from 'src/app/interfaces/iregistration-form';
+import { IHttpResError } from 'src/app/interfaces/ihttp-res-error';
 
 //LOGIN
 export const login = createAction(
@@ -15,7 +16,8 @@ export const loginSuccess = createAction(
 );
 
 export const loginFailure = createAction(
-  '[AUTH] login failure'
+  '[AUTH] login failure',
+  props<{error: IHttpResError}>()
 );
 
 //REGISTRATION
