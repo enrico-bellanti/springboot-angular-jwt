@@ -1,12 +1,19 @@
 package com.baseApp.backend.controllers;
 
+import com.baseApp.backend.exceptions.UserException;
+import com.baseApp.backend.mail.templates.ActivationMail;
+import com.baseApp.backend.models.Mail;
+import com.baseApp.backend.models.NotificationEvent;
 import com.baseApp.backend.models.UserDetailsImpl;
 import com.baseApp.backend.payloads.requests.RefreshTokenRequest;
 import com.baseApp.backend.payloads.requests.SignInRequest;
 import com.baseApp.backend.payloads.requests.SignUpRequest;
+import com.baseApp.backend.payloads.requests.UpdatePasswordRequest;
 import com.baseApp.backend.payloads.responses.AuthenticationResponse;
+import com.baseApp.backend.payloads.responses.BodyResponse;
 import com.baseApp.backend.payloads.responses.MessageResponse;
 import com.baseApp.backend.services.AuthenticationService;
+import com.baseApp.backend.services.BrokerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +21,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
+
+import static com.baseApp.backend.utils.TranslateUtils.tl;
 
 @RestController
 @RequestMapping("/api/v1/auth/")
@@ -21,13 +31,27 @@ import javax.validation.Valid;
 public class AuthenticationController {
 
     @Autowired
+    BrokerService brokerService;
+
+    @Autowired
     private final AuthenticationService authService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> register(
+    public ResponseEntity<MessageResponse> register(
             @Valid @RequestBody SignUpRequest signUpRequest
     ){
-        authService.register(signUpRequest);
+        var user = authService.register(signUpRequest);
+        var activationToken = authService.generateActivationToken(user);
+
+        var mail = new ActivationMail(user, activationToken);
+        var event = new NotificationEvent(
+                "type-test",
+                user.getId(),
+                mail.build()
+        );
+
+        brokerService.notifyToKafka("email-topic", event);
+
         return ResponseEntity.ok(new MessageResponse("user_registered"));
     }
 
@@ -52,4 +76,25 @@ public class AuthenticationController {
         authService.logOut(user.getId());
         return ResponseEntity.ok(new MessageResponse("user_logged_out"));
     }
+
+    @PostMapping("/update-password")
+    public ResponseEntity<MessageResponse> updatePassword(
+            @Valid @RequestBody UpdatePasswordRequest updatePasswordRequest,
+            @AuthenticationPrincipal UserDetailsImpl user
+            ){
+        var checkPassword = updatePasswordRequest.getPassword()
+                .equals(updatePasswordRequest.getConfirmed_password());
+        if (!checkPassword) throw new UserException("passwords_do_not_match");
+        authService.updatePassword(user.getId(), updatePasswordRequest.getPassword());
+        return ResponseEntity.ok(new MessageResponse("user_password_updated"));
+    }
+
+    @GetMapping("/activate/{token}")
+    public ResponseEntity<MessageResponse> activateUser(
+            @PathVariable("token") String token
+    ){
+        authService.activateUser(token);
+        return ResponseEntity.ok(new MessageResponse("user_activated"));
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.baseApp.backend.services;
 
 import com.baseApp.backend.enums.DefaultRoles;
+import com.baseApp.backend.exceptions.AuthenticationException;
 import com.baseApp.backend.exceptions.RefreshTokenException;
 import com.baseApp.backend.exceptions.RoleException;
 import com.baseApp.backend.exceptions.UserException;
@@ -14,6 +15,8 @@ import com.baseApp.backend.payloads.requests.SignUpRequest;
 import com.baseApp.backend.payloads.responses.AuthenticationResponse;
 import com.baseApp.backend.repositories.RoleRepository;
 import com.baseApp.backend.repositories.UserRepository;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,7 +46,7 @@ public class AuthenticationService {
     private final RefreshTokenService refreshTokenService;
 
 
-    public void register(SignUpRequest signUpRequest) {
+    public User register(SignUpRequest signUpRequest) {
         String email = signUpRequest.getEmail();
 
         if (userRepository.existsByEmail(email)) {
@@ -58,10 +61,17 @@ public class AuthenticationService {
                 .lastName(signUpRequest.getLastName())
                 .email(email)
                 .password(passwordEncoder.encode(signUpRequest.getPassword()))
+                .isEnabled(false)
                 .roles(new HashSet<>(Arrays.asList(role)))
                 .build();
 
-        userRepository.save(user);
+        return userRepository.save(user);
+    }
+
+    public String generateActivationToken(User user){
+        //24 hours to be activated
+        jwtService.setTokenExpiration(172800000L);
+        return jwtService.generateToken(UserDetailsImpl.build(user));
     }
 
     public AuthenticationResponse authenticate(SignInRequest signInRequest) {
@@ -111,5 +121,34 @@ public class AuthenticationService {
 
     public void logOut(UUID userId){
         refreshTokenService.deleteByUserId(userId);
+    }
+
+    public void updatePassword(UUID userId, String password){
+        var user = userRepository.findById(userId)
+                .orElseThrow();
+
+        user.setPassword(passwordEncoder.encode(password));
+
+        userRepository.save(user);
+    }
+
+    public void activateUser(String token){
+        try {
+            if (jwtService.isTokenValid(token)){
+                var email = jwtService.extractUsername(token);
+
+                var user = userRepository.findByEmail(email)
+                        .orElseThrow();
+
+                user.setIsEnabled(true);
+
+                userRepository.save(user);
+            }
+        } catch (ExpiredJwtException ex){
+            throw new AuthenticationException("activation_token_expired");
+        } catch (JwtException ex){
+            throw new AuthenticationException("activation_token_invalid");
+        }
+
     }
 }

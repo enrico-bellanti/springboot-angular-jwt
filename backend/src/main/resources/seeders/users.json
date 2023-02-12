@@ -1,20 +1,20 @@
 [
   {
-    "username" : "user",
     "firstName": "user",
     "lastName": "common",
     "email" : "user@mail.io",
     "password" : "password",
+    "isEnabled" : true,
     "roles" : [
       "USER"
     ]
   },
   {
-    "username" : "admin",
     "firstName": "admin",
     "lastName": "administrator",
     "email" : "admin@mail.io",
     "password" : "password",
+    "isEnabled" : true,
     "roles" : [
       "USER",
       "ADMIN"

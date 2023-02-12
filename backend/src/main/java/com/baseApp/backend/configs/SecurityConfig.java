@@ -37,7 +37,10 @@ public class SecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .authorizeHttpRequests()
                 .antMatchers(
-                        "/api/v1/auth/**",
+                        "/api/v1/auth/sign-up",
+                        "/api/v1/auth/sign-in",
+                        "/api/v1/auth/refresh-token",
+                        "/api/v1/auth/activate/**",
                         "/websocket/**"
                 )
                 .permitAll()

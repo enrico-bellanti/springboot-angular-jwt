@@ -2,7 +2,7 @@
   {
     "name" : "USER",
     "permissions" : [
-      "product.get"
+      "dashboard.view"
     ]
   },
   {
@@ -23,7 +23,8 @@
       "permission.view",
       "permission.create",
       "permission.update",
-      "permission.delete"
+      "permission.delete",
+      "dashboard.view"
     ]
   }
 ]

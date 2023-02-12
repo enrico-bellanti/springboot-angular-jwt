@@ -22,6 +22,8 @@ public class Mail {
     @Email
     private String from;
 
+    private User recipient;
+
     private String recipientName;
 
     private String subject;

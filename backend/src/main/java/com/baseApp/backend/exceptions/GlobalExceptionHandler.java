@@ -55,6 +55,22 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(value = AuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex) {
+        ErrorResponse errorResponse =  new ErrorResponse(
+                ex.getMessage(),
+                ex.getClass().getSimpleName(),
+                HttpStatus.UNAUTHORIZED.value(),
+                ZonedDateTime.now()
+        );
+
+        return new ResponseEntity<>(
+                errorResponse,
+                HttpStatus.UNAUTHORIZED
+        );
+    }
+
     @ExceptionHandler(value = RefreshTokenException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<ErrorResponse> handleTokenRefreshException(RefreshTokenException ex) {

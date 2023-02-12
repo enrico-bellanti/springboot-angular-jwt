@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { ILoginForm } from '../interfaces/ilogin-form';
 import { IRegistrationForm } from '../interfaces/iregistration-form';
 import { IAuth } from '../interfaces/iauth';
+import { IHttpRes } from '../interfaces/ihttp-res';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  registerUser(user: IRegistrationForm) {
-    return this.http.post(`${this.apiBaseUrl}/auth/sign-up`, { user });
+  registerUser(registration: IRegistrationForm): Observable<IHttpRes<never>> {
+    return this.http.post<IHttpRes<never>>(`${this.apiBaseUrl}/auth/sign-up`, { ...registration });
   }
 
   loginUser(credentials: ILoginForm): Observable<IAuth> {
@@ -30,8 +31,14 @@ export class AuthService {
       );
   }
 
-  logoutUser() {
-    return this.http.delete(`${this.apiBaseUrl}/auth/sign-out`);
+  logoutUser(): Observable<IHttpRes<never>> {
+    return this.http.delete<IHttpRes<never>>(`${this.apiBaseUrl}/auth/sign-out`);
+  }
+
+  activateUser(token: string): Observable<IHttpRes<never>> {
+    console.log(token);
+
+    return this.http.get<IHttpRes<never>>(`${this.apiBaseUrl}/auth/activate/${token}`);
   }
 
 }

@@ -10,7 +10,13 @@ import {
   logoutFailure,
   refreshToken,
   refreshTokenSuccess,
-  refreshTokenFailure
+  refreshTokenFailure,
+  register,
+  registerSuccess,
+  registerFailure,
+  activateUser,
+  activateUserSuccess,
+  activateUserFailure
 } from './auth.actions';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { of, EMPTY } from 'rxjs';
@@ -54,6 +60,24 @@ export class AuthEffects {
   {dispatch: false}
   );
 
+  doRegistration = createEffect(() => this.actions$.pipe(
+    ofType(register),
+    switchMap((action) => {
+      return this.authService.registerUser({...action.registration})
+        .pipe(
+          map(() => registerSuccess()),
+          catchError(() => of(registerFailure()))
+        )
+    })
+  ));
+
+  registrationSuccess = createEffect(() => this.actions$.pipe(
+    ofType(registerSuccess),
+    tap(() => this.router.navigate(['/registration-success'])),
+  ),
+  {dispatch: false}
+  );
+
   doRefreshToken = createEffect(() => this.actions$.pipe(
     ofType(refreshToken),
     switchMap((action) => {
@@ -69,6 +93,31 @@ export class AuthEffects {
     ofType(refreshTokenFailure),
     map(() => logoutSuccess())
   ));
+
+  activateUser = createEffect(() => this.actions$.pipe(
+    ofType(activateUser),
+    switchMap((action) => {
+      return this.authService.activateUser(action.token)
+        .pipe(
+          map(() => activateUserSuccess()),
+          catchError(() => of(activateUserFailure()))
+        )
+    })
+  ));
+
+  activateUserSuccess = createEffect(() => this.actions$.pipe(
+    ofType(activateUserSuccess),
+    tap(() => this.router.navigate(['registration/confirm/success'])),
+  ),
+  {dispatch: false}
+  );
+
+  activateUserFailure = createEffect(() => this.actions$.pipe(
+    ofType(activateUserFailure),
+    tap(() => this.router.navigate(['registration/confirm/failure'])),
+  ),
+  {dispatch: false}
+  );
 
   constructor(
     private actions$: Actions,

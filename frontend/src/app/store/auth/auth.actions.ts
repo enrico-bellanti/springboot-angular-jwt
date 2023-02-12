@@ -25,8 +25,7 @@ export const register = createAction(
 );
 
 export const registerSuccess = createAction(
-  '[AUTH] register success',
-  props<{auth: IAuth}>()
+  '[AUTH] register success'
 );
 
 export const registerFailure = createAction(
@@ -59,4 +58,18 @@ export const refreshTokenSuccess = createAction(
 
 export const refreshTokenFailure = createAction(
   '[AUTH] refresh token failure'
+);
+
+//ACTIVATE USER
+export const activateUser = createAction(
+  '[AUTH] activate user',
+  props<{token: string}>()
+);
+
+export const activateUserSuccess = createAction(
+  '[AUTH] activate user success'
+);
+
+export const activateUserFailure = createAction(
+  '[AUTH] activate user failure'
 );

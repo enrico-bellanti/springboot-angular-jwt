@@ -48,6 +48,7 @@ public class UserService {
             existingUser.setLastName(user.getLastName());
             existingUser.setEmail(user.getEmail());
             existingUser.setPassword(encoder.encode(user.getPassword()));
+            existingUser.setIsEnabled(user.getIsEnabled());
             existingUser.setPhone(user.getPhone());
             existingUser.setPreferredLang(user.getPreferredLang());
             existingUser.setRoles(user.getRoles());

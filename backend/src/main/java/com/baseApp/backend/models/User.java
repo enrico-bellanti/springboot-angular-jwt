@@ -46,6 +46,9 @@ public class User extends BaseEntity {
     @Column(name = "preferred_lang", length = 5)
     private Locale preferredLang;
 
+    @Column(name = "is_enabled", nullable = false)
+    private Boolean isEnabled = false;
+
     @Column(name = "deleted_at")
     private Date deletedAt;
 
@@ -65,8 +68,8 @@ public class User extends BaseEntity {
     )
     private Set<Notification> notifications = new HashSet<>();
 
-    public User(String firstName, String lastName, String email, String password, String phone, Locale preferredLang, Set<Role> roles) {
-    }
+    /*public User(String firstName, String lastName, String email, String password, String phone, Locale preferredLang, Set<Role> roles) {
+    }*/
 
     public void addRole(Role role){
         if (!this.roles.contains(role)){

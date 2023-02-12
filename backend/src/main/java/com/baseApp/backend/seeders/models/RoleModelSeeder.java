@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Data
 @Builder
-public class RoleSeeder {
+public class RoleModelSeeder {
     private String name;
     private Set<String> permissions = new HashSet<>();
 }
