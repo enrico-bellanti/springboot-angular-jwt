@@ -47,7 +47,7 @@ public class AuthenticationController {
         var event = new NotificationEvent(
                 "type-test",
                 user.getId(),
-                mail.build()
+                mail
         );
 
         brokerService.notifyToKafka("email-topic", event);
@@ -82,9 +82,6 @@ public class AuthenticationController {
             @Valid @RequestBody UpdatePasswordRequest updatePasswordRequest,
             @AuthenticationPrincipal UserDetailsImpl user
             ){
-        var checkPassword = updatePasswordRequest.getPassword()
-                .equals(updatePasswordRequest.getConfirmed_password());
-        if (!checkPassword) throw new UserException("passwords_do_not_match");
         authService.updatePassword(user.getId(), updatePasswordRequest.getPassword());
         return ResponseEntity.ok(new MessageResponse("user_password_updated"));
     }

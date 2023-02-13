@@ -13,12 +13,15 @@ import java.util.Locale;
 public class TranslateUtils {
     private static ResourceBundleMessageSource messageSource;
 
+    private static String fileBaseName =  "messages";
+
     @Autowired
     TranslateUtils(ResourceBundleMessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
     public static String tl(String msgCode, @Nullable Object ...args) {
+        messageSource.setBasename(fileBaseName);
         Locale locale = LocaleContextHolder.getLocale();
         if (args == null){
             return messageSource.getMessage(msgCode, null, locale);
@@ -28,6 +31,7 @@ public class TranslateUtils {
     }
 
     public static String tl(String msgCode, Locale locale, @Nullable Object ...args) {
+        messageSource.setBasename(fileBaseName);
         if (args == null){
             return messageSource.getMessage(msgCode, null, locale);
         } else {
@@ -35,8 +39,8 @@ public class TranslateUtils {
         }
     }
 
-    public static String tl(String msgCode, String fileName, Locale locale, @Nullable Object ...args) {
-        messageSource.setBasename(fileName);
+    public static String tl(String msgCode, String fileBaseName, Locale locale, @Nullable Object ...args) {
+        messageSource.setBasename(fileBaseName);
 
         if (args == null){
             return messageSource.getMessage(msgCode, null, locale);

@@ -1,5 +1,6 @@
 package com.baseApp.backend;
 
+import com.baseApp.backend.services.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,12 +14,9 @@ public class BackendApplication {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(){
+	CommandLineRunner commandLineRunner(UserService userService){
 		return arg -> {
 
 		};
 	}
 }
-
-//todo fix dynamic path mail activate from app properties
-//todo standardize all error response

@@ -10,16 +10,9 @@ import { AuthState } from 'src/app/store/auth/auth.state';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(
-    private store: Store<AuthState>,
-    private notificationService: NotificationService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  test(){
-    this.notificationService.test().subscribe(console.log)
   }
 
 }

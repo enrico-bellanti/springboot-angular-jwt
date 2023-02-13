@@ -14,17 +14,9 @@ public class WelcomeMail extends Mail {
         super();
         setRecipient(recipient);
         setSenderName("Default Sender");
-    }
 
-    public WelcomeMail(User recipient, String senderName) {
-        super();
-        setRecipient(recipient);
-        setSenderName(senderName);
-    }
-
-    public Mail build(){
-        var recipient = getRecipient();
         Locale locale = recipient.getPreferredLang() != null ? recipient.getPreferredLang() : Locale.getDefault();
+        setLocale(locale);
 
         Map<String, Object> templateProps = new HashMap<>() {{
             put("recipientName", recipient.getFirstName());
@@ -40,6 +32,30 @@ public class WelcomeMail extends Mail {
         setTemplateEngine("welcome");
         setTemplateEngineProps(templateProps);
         setLocale(locale);
-        return this;
     }
+
+    public WelcomeMail(User recipient, String senderName) {
+        super();
+        setRecipient(recipient);
+        setSenderName(senderName);
+
+        Locale locale = recipient.getPreferredLang() != null ? recipient.getPreferredLang() : Locale.getDefault();
+        setLocale(locale);
+
+        Map<String, Object> templateProps = new HashMap<>() {{
+            put("recipientName", recipient.getFirstName());
+            put("senderName", getSenderName());
+        }};
+
+        String subject = tl("welcome_mail_subject", "mailMessages", locale, "value1", "value2" );
+
+        addResource("attachment.png", "classpath:/mail-logo.png");
+        setTo(recipient.getEmail());
+        setRecipientName(recipient.getFirstName());
+        setSubject(subject);
+        setTemplateEngine("welcome");
+        setTemplateEngineProps(templateProps);
+        setLocale(locale);
+    }
+
 }

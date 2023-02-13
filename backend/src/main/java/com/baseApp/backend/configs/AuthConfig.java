@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 @RequiredArgsConstructor
-public class ApplicationConfig {
+public class AuthConfig {
 
     @Autowired
     private final UserRepository repository;

@@ -3,16 +3,13 @@ package com.baseApp.backend.controllers;
 import com.baseApp.backend.exceptions.UserException;
 import com.baseApp.backend.mail.templates.WelcomeMail;
 import com.baseApp.backend.models.Mail;
-import com.baseApp.backend.models.Notification;
 import com.baseApp.backend.models.NotificationEvent;
-import com.baseApp.backend.models.User;
 import com.baseApp.backend.services.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.message.SimpleMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;

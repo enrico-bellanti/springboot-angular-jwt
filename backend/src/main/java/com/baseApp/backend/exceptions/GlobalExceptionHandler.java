@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.baseApp.backend.utils.TranslateUtils;
+import org.springframework.web.context.request.WebRequest;
+
+import javax.servlet.http.HttpServletRequest;
+
 import static com.baseApp.backend.utils.TranslateUtils.tl;
 
 import java.time.ZonedDateTime;
@@ -23,7 +27,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity handleValidationErrors(MethodArgumentNotValidException ex) {
+    public ResponseEntity handleValidationErrors(MethodArgumentNotValidException ex, HttpServletRequest request) {
         List<String> errors = ex.getBindingResult().getFieldErrors()
                 .stream().map(FieldError::getDefaultMessage).map(TranslateUtils::tl).collect(Collectors.toList());
 
@@ -31,8 +35,8 @@ public class GlobalExceptionHandler {
                 errors,
                 ex.getClass().getSimpleName(),
                 HttpStatus.BAD_REQUEST.value(),
-                ZonedDateTime.now());
-
+                request.getServletPath()
+        );
         return new ResponseEntity<>(
                 errorResponse,
                 HttpStatus.BAD_REQUEST
@@ -41,12 +45,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = BadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<ErrorResponse> handleBadCredentialsException(BadCredentialsException ex) {
+    public ResponseEntity<ErrorResponse> handleBadCredentialsException(BadCredentialsException ex, HttpServletRequest request) {
         ErrorResponse errorResponse =  new ErrorResponse(
                 tl("bad_credentials"),
                 ex.getClass().getSimpleName(),
                 HttpStatus.UNAUTHORIZED.value(),
-                ZonedDateTime.now()
+                request.getServletPath()
         );
 
         return new ResponseEntity<>(
@@ -57,12 +61,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = AuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex) {
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex, HttpServletRequest request) {
         ErrorResponse errorResponse =  new ErrorResponse(
                 ex.getMessage(),
                 ex.getClass().getSimpleName(),
                 HttpStatus.UNAUTHORIZED.value(),
-                ZonedDateTime.now()
+                request.getServletPath()
         );
 
         return new ResponseEntity<>(
@@ -73,12 +77,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = RefreshTokenException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<ErrorResponse> handleTokenRefreshException(RefreshTokenException ex) {
+    public ResponseEntity<ErrorResponse> handleTokenRefreshException(RefreshTokenException ex, HttpServletRequest request) {
         ErrorResponse errorResponse =  new ErrorResponse(
                 ex.getMessage(),
                 ex.getClass().getSimpleName(),
                 HttpStatus.FORBIDDEN.value(),
-                ZonedDateTime.now());
+                request.getServletPath()
+        );
 
         return new ResponseEntity<>(
                 errorResponse,
@@ -88,13 +93,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity handleUserException(UserException ex) {
+    public ResponseEntity handleUserException(UserException ex, HttpServletRequest request) {
 
         ErrorResponse errorResponse =  new ErrorResponse(
                 ex.getMessage(),
                 ex.getClass().getSimpleName(),
                 HttpStatus.BAD_REQUEST.value(),
-                ZonedDateTime.now());
+                request.getServletPath()
+        );
 
         return new ResponseEntity<>(
                 errorResponse,
@@ -104,12 +110,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = RoleException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleRoleException(RoleException ex) {
+    public ResponseEntity<ErrorResponse> handleRoleException(RoleException ex, HttpServletRequest request) {
         ErrorResponse errorResponse =  new ErrorResponse(
                 ex.getMessage(),
                 ex.getClass().getSimpleName(),
                 HttpStatus.BAD_REQUEST.value(),
-                ZonedDateTime.now());
+                request.getServletPath()
+        );
 
         return new ResponseEntity<>(
                 errorResponse,
@@ -119,13 +126,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PermissionException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity handlePermissionException(PermissionException ex) {
+    public ResponseEntity handlePermissionException(PermissionException ex, HttpServletRequest request) {
 
         ErrorResponse errorResponse =  new ErrorResponse(
                 ex.getMessage(),
                 ex.getClass().getSimpleName(),
                 HttpStatus.BAD_REQUEST.value(),
-                ZonedDateTime.now());
+                request.getServletPath()
+        );
 
         return new ResponseEntity<>(
                 errorResponse,
@@ -135,13 +143,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotificationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity handleNotificationException(NotificationException ex) {
+    public ResponseEntity handleNotificationException(NotificationException ex, HttpServletRequest request) {
 
         ErrorResponse errorResponse =  new ErrorResponse(
                 ex.getMessage(),
                 ex.getClass().getSimpleName(),
                 HttpStatus.BAD_REQUEST.value(),
-                ZonedDateTime.now());
+                request.getServletPath()
+        );
 
         return new ResponseEntity<>(
                 errorResponse,

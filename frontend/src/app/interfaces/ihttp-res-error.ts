@@ -4,4 +4,3 @@ export interface IHttpResError {
   path : string
   status : number
 }
-
