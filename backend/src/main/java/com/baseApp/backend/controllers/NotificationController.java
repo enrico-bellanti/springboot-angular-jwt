@@ -9,14 +9,15 @@ import com.baseApp.backend.repositories.NotificationRepository;
 import com.baseApp.backend.services.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import static com.baseApp.backend.utils.TranslateUtils.tl;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -56,4 +57,38 @@ public class NotificationController {
 
         return ResponseEntity.ok().body(bodyResponse);
     }
+
+    @GetMapping
+    public ResponseEntity<BodyResponse> list(
+            @RequestParam(value = "column", required = false, defaultValue = "id") String column,
+            @RequestParam(value = "direction", required = false, defaultValue = "ASC") Sort.Direction direction,
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "25") Integer size,
+            @AuthenticationPrincipal UserDetailsImpl user
+    ) {
+        Sort sort = Sort.by(direction, column);
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+
+        var bodyResponse = BodyResponse.builder()
+                .message(tl("notification_list_success"))
+                .data(notificationService.getAllById(pageRequest, user.getId()))
+                .build();
+
+        return ResponseEntity.ok().body(bodyResponse);
+
+    }
+
+    @GetMapping("/get-unread")
+    public ResponseEntity setNotificationAsRead(@AuthenticationPrincipal UserDetailsImpl user) {
+
+        BodyResponse bodyResponse = new BodyResponse(
+                tl("notification_count_success"),
+                notificationService.getAllUnReadByUserId(user.getId())
+        );
+
+        return ResponseEntity.ok().body(bodyResponse);
+    }
+
+
+
 }

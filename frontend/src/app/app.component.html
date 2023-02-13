@@ -22,7 +22,7 @@
         <mat-icon
           [matBadge]="notificationCount"
           matBadgeColor="warn"
-          [matBadgeHidden]="notificationsHidden"
+          [matBadgeHidden]="notificationCount < 1"
         >person_pin</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
@@ -34,7 +34,7 @@
           <mat-icon
             [matBadge]="notificationCount"
             matBadgeColor="warn"
-            [matBadgeHidden]="notificationsHidden"
+            [matBadgeHidden]="notificationCount < 1"
           >notifications_active</mat-icon>
           <span>Notifications</span>
         </button>

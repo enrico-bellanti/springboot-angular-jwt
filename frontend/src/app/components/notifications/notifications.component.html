@@ -1,1 +1,30 @@
-<p>notifications works!</p>
+
+<mat-accordion class="example-headers-align" multi *ngIf="notifications.length > 0">
+  <ng-container *ngFor="let notification of notifications">
+    <mat-expansion-panel
+      class="notification-panel"
+      (click) ="onNotificationRead(notification)"
+      [expanded]="notificationOpened === notification.id" (opened)="setNotificationOpened(notification.id)" hideToggle
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <p
+            [ngClass]="{'notification-uread': notification.read_at === null}"
+          >{{ notification.created_at | date: 'dd/MM/yyyy HH:ss:mm' }}</p>
+
+        </mat-panel-title>
+        <mat-panel-description>
+          <p
+          [ngClass]="{'notification-uread': notification.read_at === null}"
+          class="text-overflow"
+          >{{notification.data.formattedMessage}}</p>
+          <mat-icon *ngIf="notification.read_at !== null" style="color: rgb(0, 128, 55);">check_circle</mat-icon>
+          <mat-icon *ngIf="notification.read_at === null">check_circle_outline</mat-icon>
+        </mat-panel-description>
+
+      </mat-expansion-panel-header>
+      <p>{{notification.data.formattedMessage}}</p>
+    </mat-expansion-panel>
+  </ng-container>
+
+</mat-accordion>

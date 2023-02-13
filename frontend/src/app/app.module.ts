@@ -1,3 +1,4 @@
+import { NotificationEffects } from './store/notification/notification.effects';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +23,7 @@ import { ActivateUserFailureComponent } from './components/auth/activate-user/ac
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UikitModule } from './uikit/uikit.module';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { notificationReducer } from './store/notification/notification.reducer';
 
 @NgModule({
   declarations: [
@@ -43,13 +45,15 @@ import { NotificationsComponent } from './components/notifications/notifications
     HttpClientModule,
     UikitModule,
     StoreModule.forRoot({
-      auth: authReducer
+      auth: authReducer,
+      notification: notificationReducer
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 20
     }),
     EffectsModule.forRoot([
-      AuthEffects
+      AuthEffects,
+      NotificationEffects
     ]),
     BrowserAnimationsModule,
   ],

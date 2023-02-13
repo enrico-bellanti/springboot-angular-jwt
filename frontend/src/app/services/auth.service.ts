@@ -36,8 +36,6 @@ export class AuthService {
   }
 
   activateUser(token: string): Observable<IHttpRes<never>> {
-    console.log(token);
-
     return this.http.get<IHttpRes<never>>(`${this.apiBaseUrl}/auth/activate/${token}`);
   }
 

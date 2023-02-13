@@ -5,13 +5,18 @@ import com.baseApp.backend.exceptions.UserException;
 import com.baseApp.backend.models.Notification;
 import com.baseApp.backend.models.NotificationEvent;
 import com.baseApp.backend.models.User;
+import com.baseApp.backend.payloads.responses.NotificationResponse;
+import com.baseApp.backend.payloads.responses.RoleResponse;
 import com.baseApp.backend.repositories.NotificationRepository;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +28,28 @@ public class NotificationService {
 
     @Autowired
     UserService userService;
+
+    public Page<NotificationResponse> getAllById(PageRequest pageRequest, UUID userId){
+        User user = userService.getById(userId)
+                .orElseThrow(() -> new UserException("user_not_found", userId.toString()));
+        return notificationRepository.findAllWhereNotifiableId(pageRequest, user)
+                .map(n -> new NotificationResponse(n));
+    }
+
+    public List<NotificationResponse> getAllUnReadByUserId(UUID userId){
+        User user = userService.getById(userId)
+                .orElseThrow(() -> new UserException("user_not_found", userId.toString()));
+        return notificationRepository.findAllUnReadByNotifiableId(user)
+                .stream()
+                .map(n -> new NotificationResponse(n))
+                .toList();
+    }
+
+    public Long getCountUnReadByUserId(UUID userId){
+        User user = userService.getById(userId)
+                .orElseThrow(() -> new UserException("user_not_found", userId.toString()));
+        return notificationRepository.countUnReadByNotifiableId(user);
+    }
 
 
     public Notification create(String type, User notifiable, Object data){

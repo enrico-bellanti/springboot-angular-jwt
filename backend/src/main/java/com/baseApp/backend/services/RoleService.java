@@ -35,6 +35,7 @@ public class RoleService {
                 .map(r -> new RoleResponse(r));
     }
 
+
     public Optional<Role> getByName(String name){
         return roleRepository.findByName(name);
     }
