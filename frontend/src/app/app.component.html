@@ -20,7 +20,7 @@
     <ng-template #loggedOut>
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon
-          matBadge="0"
+          [matBadge]="notificationCount"
           matBadgeColor="warn"
           [matBadgeHidden]="notificationsHidden"
         >person_pin</mat-icon>
@@ -32,7 +32,7 @@
         </button>
         <button mat-menu-item routerLink="/notifications">
           <mat-icon
-            matBadge="15"
+            [matBadge]="notificationCount"
             matBadgeColor="warn"
             [matBadgeHidden]="notificationsHidden"
           >notifications_active</mat-icon>
