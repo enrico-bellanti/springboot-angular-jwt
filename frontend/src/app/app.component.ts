@@ -10,7 +10,8 @@ import { AuthState } from './store/auth/auth.state';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
+  notificationsHidden: boolean = true;
+  notificationCount: number = 0;
 
   auth$ = this.store.select(getAuthInfo);
 
@@ -24,6 +25,10 @@ export class AppComponent implements OnInit {
 
   logout(){
     this.store.dispatch(logout());
+  }
+
+  toggleBadgeVisibility() {
+    this.notificationsHidden = !this.notificationsHidden;
   }
 
 }

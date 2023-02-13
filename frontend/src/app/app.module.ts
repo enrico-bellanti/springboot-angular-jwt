@@ -19,6 +19,9 @@ import { RegistrationConfirmComponent } from './components/auth/registration-con
 import { ActivateUserComponent } from './components/auth/activate-user/activate-user.component';
 import { ActivateUserSuccessComponent } from './components/auth/activate-user/activate-user-success/activate-user-success.component';
 import { ActivateUserFailureComponent } from './components/auth/activate-user/activate-user-failure/activate-user-failure.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UikitModule } from './uikit/uikit.module';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -30,13 +33,15 @@ import { ActivateUserFailureComponent } from './components/auth/activate-user/ac
     RegistrationConfirmComponent,
     ActivateUserComponent,
     ActivateUserSuccessComponent,
-    ActivateUserFailureComponent
+    ActivateUserFailureComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    UikitModule,
     StoreModule.forRoot({
       auth: authReducer
     }),
@@ -46,6 +51,7 @@ import { ActivateUserFailureComponent } from './components/auth/activate-user/ac
     EffectsModule.forRoot([
       AuthEffects
     ]),
+    BrowserAnimationsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

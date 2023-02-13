@@ -12,19 +12,37 @@
   <div class="spacer"></div>
   <div class="toolbar-right">
     <div *ngIf="(auth$ | async) == null; else loggedOut">
-      <button
-        routerLink="/login"
-      >Login</button>
-      <button
-        routerLink="/register"
-      >Register</button>
+      <button routerLink="/login" class="toolbar-btn" mat-stroked-button color="primary">Login</button>
+      <button routerLink="/register" class="toolbar-btn" mat-stroked-button color="primary">Register</button>
     </div>
 
 
     <ng-template #loggedOut>
-      <button
-        (click)="logout()"
-      >Logout</button>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon
+          matBadge="0"
+          matBadgeColor="warn"
+          [matBadgeHidden]="notificationsHidden"
+        >person_pin</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/dashboard">
+          <mat-icon>dashboard</mat-icon>
+          <span>DashBoard</span>
+        </button>
+        <button mat-menu-item routerLink="/notifications">
+          <mat-icon
+            matBadge="15"
+            matBadgeColor="warn"
+            [matBadgeHidden]="notificationsHidden"
+          >notifications_active</mat-icon>
+          <span>Notifications</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
     </ng-template>
 
   </div>

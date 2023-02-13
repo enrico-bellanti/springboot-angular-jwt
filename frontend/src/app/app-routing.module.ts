@@ -1,3 +1,4 @@
+import { NotificationsComponent } from './components/notifications/notifications.component';
 import { RegistrationConfirmComponent } from './components/auth/registration-confirm/registration-confirm.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
@@ -34,6 +35,10 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
+      },
+      {
+        path: 'notifications',
+        component: NotificationsComponent,
       },
       {
         path: 'registration-success',
