@@ -24,6 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UikitModule } from './uikit/uikit.module';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { notificationReducer } from './store/notification/notification.reducer';
+import { WebsocketService } from './services/websocket.service';
+import { rxStompFactory } from './factories/rxStomp.factory';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,15 @@ import { notificationReducer } from './store/notification/notification.reducer';
     BrowserAnimationsModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: WebsocketService,
+      useFactory: rxStompFactory,
+    },
   ],
   bootstrap: [AppComponent]
 })

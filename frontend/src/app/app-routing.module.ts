@@ -38,6 +38,7 @@ const routes: Routes = [
       },
       {
         path: 'notifications',
+        canActivate: [UserIsAccessAllowedGuard],
         component: NotificationsComponent,
       },
       {

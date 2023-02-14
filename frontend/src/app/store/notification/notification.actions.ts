@@ -1,19 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { INotification } from "src/app/interfaces/inotification";
 
-export const loadUreadNotification = createAction(
-  '[NOTIFICATION] load unread notitications'
-);
-
-export const loadUreadNotificationSuccess = createAction(
-  '[NOTIFICATION] load unread notitications success',
-  props<{notifications: INotification[]}>()
-);
-
-export const loadUreadNotificationFailure = createAction(
-  '[NOTIFICATION] load unread notitications failure'
-);
-
 export const addUreadNotification = createAction(
   '[NOTIFICATION] add unread notitication',
   props<{notification: INotification}>()
@@ -44,6 +31,18 @@ export const loadNotificationsSuccess = createAction(
 
 export const loadNotificationsFailure = createAction(
   '[NOTIFICATION] load notitications failure'
+);
+
+export const activateWebSocket = createAction(
+  '[NOTIFICATION] activate websocket'
+);
+
+export const activateWebsocketSuccess = createAction(
+  '[NOTIFICATION] activate websocket success'
+);
+
+export const activateWebsocketFailure = createAction(
+  '[NOTIFICATION] activate websocket failure'
 );
 
 

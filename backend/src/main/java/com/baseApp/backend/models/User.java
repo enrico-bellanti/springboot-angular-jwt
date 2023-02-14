@@ -68,9 +68,6 @@ public class User extends BaseEntity {
     )
     private Set<Notification> notifications = new HashSet<>();
 
-    /*public User(String firstName, String lastName, String email, String password, String phone, Locale preferredLang, Set<Role> roles) {
-    }*/
-
     public void addRole(Role role){
         if (!this.roles.contains(role)){
             this.roles.add(role);

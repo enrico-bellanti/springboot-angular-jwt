@@ -21,4 +21,3 @@ public class BackendApplication {
 	}
 }
 
-//todo set notification standard message data
