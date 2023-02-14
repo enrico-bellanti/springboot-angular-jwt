@@ -31,7 +31,8 @@ export const registerSuccess = createAction(
 );
 
 export const registerFailure = createAction(
-  '[AUTH] register failure'
+  '[AUTH] register failure',
+  props<{error: IHttpResError}>()
 );
 
 //LOGOUT

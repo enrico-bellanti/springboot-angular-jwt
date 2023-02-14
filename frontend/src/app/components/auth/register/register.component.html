@@ -100,10 +100,10 @@
       </div>
       <div class="form-group message-error-wrapper">
         <div
-          *ngIf="errorRegistrationMessage"
+          *ngIf="(errorLoginMessage$$ | async); let message"
           class="invalid-feedback"
         >
-          Registration failed: {{ 'errorMessageRegistration' }}
+          Login failed: {{ message }}
         </div>
       </div>
     </form>
