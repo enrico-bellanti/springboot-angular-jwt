@@ -26,6 +26,11 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { notificationReducer } from './store/notification/notification.reducer';
 import { WebsocketService } from './services/websocket.service';
 import { rxStompFactory } from './factories/rxStomp.factory';
+import { storageMetaReducer } from './store/storage.metareducer';
+import { metaReducers } from './store';
+import { authStateKey } from './store/auth/auth.state';
+import { notificationStateKey } from './store/notification/notification.state';
+
 
 @NgModule({
   declarations: [
@@ -46,10 +51,21 @@ import { rxStompFactory } from './factories/rxStomp.factory';
     ReactiveFormsModule,
     HttpClientModule,
     UikitModule,
-    StoreModule.forRoot({
-      auth: authReducer,
-      notification: notificationReducer
-    }),
+    StoreModule.forRoot(
+      {
+        [authStateKey]: authReducer,
+        [notificationStateKey]: notificationReducer,
+      },
+      {
+        runtimeChecks: {
+          strictStateImmutability: true,
+          strictActionImmutability: true,
+          strictStateSerializability: true,
+          strictActionSerializability: true,
+        },
+        metaReducers: metaReducers,
+      }
+    ),
     StoreDevtoolsModule.instrument({
       maxAge: 20
     }),

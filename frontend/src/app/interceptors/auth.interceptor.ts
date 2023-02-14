@@ -1,5 +1,5 @@
 import { switchMap } from 'rxjs/operators';
-import { refreshToken, refreshTokenSuccess, refreshTokenFailure } from './../store/auth/auth.actions';
+import { refreshToken, refreshTokenSuccess, refreshTokenFailure, logout } from './../store/auth/auth.actions';
 import { getAuthInfo } from './../store/auth/auth.selectors';
 import { Injectable } from '@angular/core';
 import {
@@ -62,7 +62,7 @@ export class AuthInterceptor implements HttpInterceptor {
           return next.handle(this.addTokenHeader(request, action.auth.accessToken));
         } else {
           console.log('REFRESH TOKEN EXPIRED');
-
+          this.store.dispatch(logout());
           return throwError(() => error)
         }
 
