@@ -11,6 +11,7 @@ import { UserIsAuthorizedGuard } from './guards/user-is-authorized.guard';
 import { ActivateUserComponent } from './components/auth/activate-user/activate-user.component';
 import { ActivateUserFailureComponent } from './components/auth/activate-user/activate-user-failure/activate-user-failure.component';
 import { ActivateUserSuccessComponent } from './components/auth/activate-user/activate-user-success/activate-user-success.component';
+import { RoleControllerComponent } from './components/admin/role-controller/role-controller.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,14 @@ const routes: Routes = [
         component: DashboardComponent,
         data: {
           permissions: ['dashboard.view'],
+        },
+      },
+      {
+        path: 'role-controller',
+        canActivate: [UserIsAccessAllowedGuard, UserIsAuthorizedGuard],
+        component: RoleControllerComponent,
+        data: {
+          permissions: ['role.manage-permissions'],
         },
       },
       {

@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { AuthState } from './store/auth/auth.state';
 import { getNotifications, getUreadNotifications } from './store/notification/notification.selectors';
 import { Subject, takeUntil } from 'rxjs';
+import { PermissionService } from './services/permission.service';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +21,11 @@ export class AppComponent implements OnInit, OnDestroy {
   auth$ = this.store.select(getAuthInfo);
 
   constructor(
-    private store: Store<AuthState>
+    private store: Store<AuthState>,
+    private permissionService: PermissionService
   ) { }
+
+  hasPermissionRoleController$ = this.permissionService.hasPermissions(['role.manage-permissions']);
 
   ngOnInit(): void {
     this.store.select(getUreadNotifications)

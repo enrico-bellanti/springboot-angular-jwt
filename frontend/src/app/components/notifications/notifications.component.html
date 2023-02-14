@@ -1,3 +1,4 @@
+<h2 *ngIf="notifications.length === 0">No notification at moment</h2>
 
 <mat-accordion class="example-headers-align" multi *ngIf="notifications.length > 0">
   <ng-container *ngFor="let notification of notifications">

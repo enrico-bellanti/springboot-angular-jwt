@@ -38,6 +38,14 @@
           >notifications_active</mat-icon>
           <span>Notifications</span>
         </button>
+        <button
+          *ngIf="hasPermissionRoleController$ | async"
+          mat-menu-item
+          routerLink="/role-controller"
+        >
+          <mat-icon>assignment_ind</mat-icon>
+          <span>Role Controller</span>
+        </button>
         <button mat-menu-item (click)="logout()">
           <mat-icon>exit_to_app</mat-icon>
           <span>Logout</span>

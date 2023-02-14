@@ -30,6 +30,7 @@ import { storageMetaReducer } from './store/storage.metareducer';
 import { metaReducers } from './store';
 import { authStateKey } from './store/auth/auth.state';
 import { notificationStateKey } from './store/notification/notification.state';
+import { RoleControllerComponent } from './components/admin/role-controller/role-controller.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { notificationStateKey } from './store/notification/notification.state';
     ActivateUserComponent,
     ActivateUserSuccessComponent,
     ActivateUserFailureComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    RoleControllerComponent
   ],
   imports: [
     BrowserModule,
